@@ -1,4 +1,6 @@
 'use strict';
+var storageLocationSelect = document.getElementById("storageLocation");
+var storageLocation = storageLocationSelect.options[storageLocationSelect.selectedIndex].value;
 
 var singleUploadForm = document.querySelector('#singleUploadForm');
 var singleFileUploadInput = document.querySelector('#singleFileUploadInput');
@@ -12,10 +14,11 @@ var multipleFileUploadSuccess = document.querySelector('#multipleFileUploadSucce
 
 function uploadSingleFile(file) {
     var formData = new FormData();
+    var baseUrl = "/file/" + storageLocation;
     formData.append("file", file);
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/file/local/upload");
+    xhr.open("POST", baseUrl+"/upload");
 
     xhr.onload = function() {
         console.log(xhr.responseText);
@@ -35,12 +38,13 @@ function uploadSingleFile(file) {
 
 function uploadMultipleFiles(files) {
     var formData = new FormData();
+    var baseUrl = "/file/" + storageLocation;
     for(var index = 0; index < files.length; index++) {
         formData.append("files", files[index]);
     }
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/file/local/multi-upload");
+    xhr.open("POST", baseUrl+"/multi-upload");
 
     xhr.onload = function() {
         console.log(xhr.responseText);
@@ -81,5 +85,9 @@ multipleUploadForm.addEventListener('submit', function(event){
     }
     uploadMultipleFiles(files);
     event.preventDefault();
+}, true);
+
+storageLocationSelect.addEventListener('change', function(event){
+    storageLocation = storageLocationSelect.options[storageLocationSelect.selectedIndex].value;
 }, true);
 
