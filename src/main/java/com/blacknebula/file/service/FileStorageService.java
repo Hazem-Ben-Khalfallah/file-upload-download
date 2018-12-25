@@ -1,8 +1,8 @@
-package com.example.filedemo.service;
+package com.blacknebula.file.service;
 
-import com.example.filedemo.exception.FileStorageException;
-import com.example.filedemo.exception.MyFileNotFoundException;
-import com.example.filedemo.property.FileStorageProperties;
+import com.blacknebula.file.exception.FileStorageException;
+import com.blacknebula.file.exception.MyFileNotFoundException;
+import com.blacknebula.file.property.FileStorageProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;

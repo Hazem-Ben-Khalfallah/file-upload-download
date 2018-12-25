@@ -1,4 +1,4 @@
-package com.example.filedemo.exception;
+package com.blacknebula.file.exception;
 
 public class FileStorageException extends RuntimeException {
     public FileStorageException(String message) {

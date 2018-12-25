@@ -1,6 +1,6 @@
-package com.example.filedemo;
+package com.blacknebula.file;
 
-import com.example.filedemo.property.FileStorageProperties;
+import com.blacknebula.file.property.FileStorageProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

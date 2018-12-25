@@ -1,4 +1,4 @@
-package com.example.filedemo.payload;
+package com.blacknebula.file.payload;
 
 
 public class UploadFileResponse {

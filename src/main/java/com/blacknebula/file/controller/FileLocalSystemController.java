@@ -1,7 +1,7 @@
-package com.example.filedemo.controller;
+package com.blacknebula.file.controller;
 
-import com.example.filedemo.payload.UploadFileResponse;
-import com.example.filedemo.service.FileStorageService;
+import com.blacknebula.file.payload.UploadFileResponse;
+import com.blacknebula.file.service.FileStorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +20,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-public class FileController {
+@RequestMapping("/file/local")
+public class FileLocalSystemController {
 
-    private static final Logger logger = LoggerFactory.getLogger(FileController.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileLocalSystemController.class);
 
     @Autowired
     private FileStorageService fileStorageService;
 
-    @PostMapping("/uploadFile")
+    @PostMapping("/upload")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/downloadFile/")
+                .path("/file/local/download/")
                 .path(fileName)
                 .toUriString();
 
@@ -40,7 +41,7 @@ public class FileController {
                 file.getContentType(), file.getSize());
     }
 
-    @PostMapping("/uploadMultipleFiles")
+    @PostMapping("/multi-upload")
     public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
         return Arrays.asList(files)
                 .stream()
@@ -48,7 +49,7 @@ public class FileController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/downloadFile/{fileName:.+}")
+    @GetMapping("/download/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         // Load file as Resource
         Resource resource = fileStorageService.loadFileAsResource(fileName);
