@@ -1,7 +1,7 @@
 package com.blacknebula.file.controller;
 
         import com.blacknebula.file.payload.UploadFileResponse;
-        import com.blacknebula.file.service.LocalSystemFileStorageService;
+        import com.blacknebula.file.service.LocalSystemStorageService;
         import org.slf4j.Logger;
         import org.slf4j.LoggerFactory;
         import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class LocalSystemFileController {
     private static final Logger logger = LoggerFactory.getLogger(LocalSystemFileController.class);
 
     @Autowired
-    private LocalSystemFileStorageService localSystemfileStorageService;
+    private LocalSystemStorageService localSystemfileStorageService;
 
     @PostMapping("/upload")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {

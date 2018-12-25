@@ -1,23 +1,29 @@
-package com.blacknebula.file.model;
+package com.blacknebula.file.model.postgresql;
 
+import com.blacknebula.file.model.AbstractDBFile;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "files")
-public class DBFile {
+public class DBFile implements AbstractDBFile {
+
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+    protected String id;
 
-    private String fileName;
+    protected String fileName;
 
-    private String fileType;
+    protected String fileType;
 
     @Lob
-    private byte[] data;
+    protected byte[] data;
 
     public DBFile() {
 

@@ -2,7 +2,6 @@ package com.blacknebula.file.controller;
 
 import com.blacknebula.file.model.AbstractDBFile;
 import com.blacknebula.file.model.DBStorageEnum;
-import com.blacknebula.file.model.mysql.DBFile;
 import com.blacknebula.file.payload.UploadFileResponse;
 import com.blacknebula.file.service.DBStorageService;
 import org.slf4j.Logger;
@@ -27,20 +26,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/file/mysql")
-public class MysqlFileController {
+@RequestMapping("/file/postgres")
+public class PostgresqlFileController {
 
-    private static final Logger logger = LoggerFactory.getLogger(MysqlFileController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PostgresqlFileController.class);
 
     @Autowired
-    private DBStorageService dbStorageService;
+    private DBStorageService DBStorageService;
 
     @PostMapping("/upload")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
-        final AbstractDBFile dbFile = dbStorageService.storeFile(file, DBStorageEnum.MYSQL);
+        final AbstractDBFile dbFile = DBStorageService.storeFile(file, DBStorageEnum.POSTGRESQL);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/file/mysql/download/")
+                .path("/file/postgres/download/")
                 .path(dbFile.getId())
                 .toUriString();
 
@@ -59,7 +58,7 @@ public class MysqlFileController {
     @GetMapping("/download/{fileId}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileId) {
         // Load file from database
-        final AbstractDBFile dbFile = dbStorageService.getFile(fileId, DBStorageEnum.MYSQL);
+        final AbstractDBFile dbFile = DBStorageService.getFile(fileId, DBStorageEnum.POSTGRESQL);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(dbFile.getFileType()))

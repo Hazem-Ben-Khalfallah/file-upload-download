@@ -17,12 +17,12 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 @Service
-public class LocalSystemFileStorageService {
+public class LocalSystemStorageService {
 
     private final Path fileStorageLocation;
 
     @Autowired
-    public LocalSystemFileStorageService(FileStorageProperties fileStorageProperties) {
+    public LocalSystemStorageService(FileStorageProperties fileStorageProperties) {
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
                 .toAbsolutePath().normalize();
 
