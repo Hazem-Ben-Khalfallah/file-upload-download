@@ -1,36 +1,36 @@
 package com.blacknebula.file.controller;
 
-import com.blacknebula.file.payload.UploadFileResponse;
-import com.blacknebula.file.service.FileStorageService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+        import com.blacknebula.file.payload.UploadFileResponse;
+        import com.blacknebula.file.service.LocalSystemFileStorageService;
+        import org.slf4j.Logger;
+        import org.slf4j.LoggerFactory;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.core.io.Resource;
+        import org.springframework.http.HttpHeaders;
+        import org.springframework.http.MediaType;
+        import org.springframework.http.ResponseEntity;
+        import org.springframework.web.bind.annotation.*;
+        import org.springframework.web.multipart.MultipartFile;
+        import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+        import javax.servlet.http.HttpServletRequest;
+        import java.io.IOException;
+        import java.util.Arrays;
+        import java.util.List;
+        import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/file/local")
-public class FileLocalSystemController {
+public class LocalSystemFileController {
 
-    private static final Logger logger = LoggerFactory.getLogger(FileLocalSystemController.class);
+    private static final Logger logger = LoggerFactory.getLogger(LocalSystemFileController.class);
 
     @Autowired
-    private FileStorageService fileStorageService;
+    private LocalSystemFileStorageService localSystemfileStorageService;
 
     @PostMapping("/upload")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
-        String fileName = fileStorageService.storeFile(file);
+        String fileName = localSystemfileStorageService.storeFile(file);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/file/local/download/")
@@ -52,7 +52,7 @@ public class FileLocalSystemController {
     @GetMapping("/download/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         // Load file as Resource
-        Resource resource = fileStorageService.loadFileAsResource(fileName);
+        Resource resource = localSystemfileStorageService.loadFileAsResource(fileName);
 
         // Try to determine file's content type
         String contentType = null;
